@@ -1,7 +1,22 @@
+@mixin for-phone {
+  @media only screen and (orientation: portrait) {
+    @content;
+  }
+}
+@mixin for-desktop {
+  @media only screen and (orientation: landscape) {
+    @content;
+  }
+}
+
 .selectGrid {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
+  @include for-phone {
+    flex-direction: column;
+  }
   margin: 1em 0 1em 0;
 }
 
@@ -23,7 +38,13 @@ table {
 }
 
 .carStockDisplay {
-  font-size: 3em;
+
+  @include for-phone {
+   font-size: 1.5em;
+  }
+  @include for-desktop {
+    font-size: 3em;
+  }
   text-transform: uppercase;
   color: #69f0ae;
   text-align: center;
