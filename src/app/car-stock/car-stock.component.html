@@ -1,0 +1,90 @@
+<mat-toolbar color="primary">
+  <span>LatentView Analytics Interview</span>
+</mat-toolbar>
+
+
+<form [formGroup]="carStockForm">
+  <div class="selectGrid">
+
+    <div>
+      <mat-form-field>
+        <mat-label>Brand</mat-label>
+        <mat-select formControlName="brand" multiple>
+          <mat-option *ngFor="let brands of uniqueBrands" [value]="brands">
+            {{brands}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select formControlName="year" multiple>
+          <mat-option *ngFor="let year of uniqueYears" [value]="year">
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Segment</mat-label>
+        <mat-select formControlName="segment" multiple>
+          <mat-option *ngFor="let segment of uniqueSegments" [value]="segment">
+            {{segment}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Engine</mat-label>
+        <mat-select formControlName="engine" multiple>
+          <mat-option *ngFor="let engine of uniqueEngine" [value]="engine">
+            {{engine}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+</form>
+
+<div class="resetBtnGrid">
+  <button (click)='resetForm()' mat-raised-button color="accent">Reset</button>
+</div>
+
+<div *ngIf="cartFilterSub$ | async as cartFilterSub">
+
+  <div class="carStockDisplay">total car stock : {{cartFilterSub.length}}</div>
+
+  <table mat-table [dataSource]="cartFilterSub" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef> Brand </th>
+      <td mat-cell *matCellDef="let element"> {{element.brand_key}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="segment">
+      <th mat-header-cell *matHeaderCellDef> Segment </th>
+      <td mat-cell *matCellDef="let element"> {{element.segment_key}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="engine">
+      <th mat-header-cell *matHeaderCellDef> Engine </th>
+      <td mat-cell *matCellDef="let element"> {{element.engine_type_key}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <div class="noMatchRec" *ngIf="cartFilterSub.length <= 0">No matching records found</div>
+</div>
